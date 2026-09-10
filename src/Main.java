@@ -10,6 +10,23 @@ import java.util.List;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
 
+
+    /*
+     * Ukol na 17. 9.
+     *
+     * Vytvořit další typy účtů a rozšířit stávající:
+     *
+     * Studentský účet
+     *  - povolit výběr 5 000 do záporu
+     *
+     * Spořící účet
+     *  - když přidám peníze na účet, připíše se mi i 0,5% úrok
+     *
+     * Podnikatelský účet
+     *  - každý výběr odečte transakční poplatek 1%
+     *
+     */
+
     public static void main(String[] args) {
 
         AccountOwner owner = new AccountOwner("Tomas", "Pesek");
