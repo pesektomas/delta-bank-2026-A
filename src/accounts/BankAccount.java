@@ -1,5 +1,8 @@
 package accounts;
 
+import notifiers.ConsoleNotifier;
+import notifiers.EmailNotifier;
+import notifiers.Notifier;
 import people.AccountOwner;
 
 // kod banky  2010
@@ -12,7 +15,11 @@ public abstract class BankAccount {
 
     private AccountOwner owner;
 
-    private double balance;
+    protected double balance;
+
+    protected Notifier notifier = new EmailNotifier();
+
+    public BankAccount(String uuid, String accountNumber, AccountOwner owner) {}
 
     public BankAccount(AccountOwner owner) {
         this.owner = owner;
@@ -29,7 +36,7 @@ public abstract class BankAccount {
     }
 
     public void sub(double amount) {
-        System.out.println("Sub amount is " + amount);
+        this.notifier.notify("Sub amount is " + amount);
 
         double newBalance = balance - amount;
 

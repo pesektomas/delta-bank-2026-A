@@ -1,5 +1,6 @@
 import accounts.BankAccount;
 import accounts.CurrentAccount;
+import accounts.InterestPoint;
 import accounts.StudentAccount;
 import people.AccountOwner;
 
@@ -38,6 +39,12 @@ public class Main {
 
         BankAccount studentAccount = new StudentAccount(owner, 100);
         accounts.add(studentAccount);
+
+        for (BankAccount account : accounts) {
+            if (account instanceof InterestPoint) {
+                ((InterestPoint)account).calculateInterest();
+            }
+        }
 
 
         for (BankAccount account : accounts) {
