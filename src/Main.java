@@ -4,6 +4,7 @@ import accounts.InterestPoint;
 import accounts.StudentAccount;
 import creditCards.CreditCard;
 import people.Owner;
+import people.OwnerFactory;
 import transfers.TransferService;
 
 import java.util.ArrayList;
@@ -33,8 +34,11 @@ public class Main {
     public static void main(String[] args) {
 
         TransferService transferService = new TransferService();
+        OwnerFactory ownerFactory = new OwnerFactory();
 
-        Owner owner = new Owner("Tomas", "Pesek");
+
+        // new Owner(name, lastName);
+        Owner owner = ownerFactory.createAccountOwner("Tomas", "Pesek");
 
         List<BankAccount> accounts = new ArrayList<>();
 

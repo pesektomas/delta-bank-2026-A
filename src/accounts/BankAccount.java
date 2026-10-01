@@ -5,6 +5,8 @@ import notifiers.Notifier;
 import people.Owner;
 import transfers.Withdraw;
 
+import java.util.UUID;
+
 // kod banky  2010
 
 public abstract class BankAccount implements Withdraw {
@@ -19,7 +21,11 @@ public abstract class BankAccount implements Withdraw {
 
     protected Notifier notifier = new EmailNotifier();
 
-    public BankAccount(String uuid, String accountNumber, Owner owner) {}
+    public BankAccount(String uuid, String accountNumber, Owner owner) {
+        this.uuid = uuid;
+        this.accountNumber = accountNumber;
+        this.owner = owner;
+    }
 
     public BankAccount(Owner owner) {
         this.owner = owner;

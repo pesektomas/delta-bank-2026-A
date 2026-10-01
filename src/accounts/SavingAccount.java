@@ -23,6 +23,6 @@ public class SavingAccount extends BankAccount implements InterestPoint {
     public void calculateInterest() {
         double interest = this.balance * INTEREST;
 
-        this.setBalance(this.getBalance() + interest);
+        this.setNewBalance(this.getBalance() + interest);
     }
 }
