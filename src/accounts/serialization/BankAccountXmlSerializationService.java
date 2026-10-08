@@ -4,7 +4,7 @@ import accounts.BankAccount;
 
 import java.util.List;
 
-public class BankAccountJsonSerializationService implements Serialization {
+public class BankAccountXmlSerializationService implements Serialization{
 
     BankAccountSerializeFactory bankAccountSerializeFactory = new BankAccountSerializeFactory();
 
@@ -12,16 +12,15 @@ public class BankAccountJsonSerializationService implements Serialization {
     public String serializeAll(List<BankAccount> bankAccounts) {
 
         StringBuilder builder = new StringBuilder();
-        builder.append("[\n");
+        builder.append("<root>\n");
+        builder.append("<accountList>\n");
 
-        for (int i = 0; i < bankAccounts.size(); i++) {
-            builder.append(serialize(bankAccounts.get(i)));
-            if (i < bankAccounts.size() - 1) {
-                builder.append(",\n");
-            }
+        for(BankAccount bankAccount : bankAccounts) {
+            builder.append(serialize(bankAccount));
         }
 
-        builder.append("]");
+        builder.append("</accountList>\n");
+        builder.append("<root>\n");
 
         return builder.toString();
     }
@@ -34,17 +33,15 @@ public class BankAccountJsonSerializationService implements Serialization {
         // TODO make json string
         StringBuilder builder = new StringBuilder();
 
-        builder.append("{\n");
-        builder.append("\"accountNumber\": ");
-
-        builder.append("\"");
+        builder.append("<bankAccount>\n");
+        builder.append("<number>");
         builder.append(bankAccountSerialize.bankAccountNumber);
-        builder.append("\"\n");
-
-        builder.append("}");
+        builder.append("</number>\n");
+        builder.append("</bankAccount>\n");
 
 
         return builder.toString();
     }
 
 }
+

@@ -1,16 +1,14 @@
 import accounts.BankAccount;
-import accounts.CurrentAccount;
 import accounts.InterestPoint;
 import accounts.StudentAccount;
 import accounts.serialization.BankAccountJsonSerializationService;
-import accounts.serialization.BankAccountSerializeFactory;
+import accounts.serialization.BankAccountXmlSerializationService;
+import accounts.services.AccountService;
 import creditCards.CreditCard;
 import people.Owner;
-import people.OwnerFactory;
+import people.factories.OwnerFactory;
+import people.services.OwnerService;
 import transfers.TransferService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -36,28 +34,24 @@ public class Main {
     public static void main(String[] args) {
 
         TransferService transferService = new TransferService();
-        OwnerFactory ownerFactory = new OwnerFactory();
+        AccountService accountService = new AccountService();
+        OwnerService ownerService = new OwnerService();
 
+        Owner owner = ownerService.createOwner("Tomas", "Pesek");
 
-        // new Owner(name, lastName);
-        Owner owner = ownerFactory.createAccountOwner("Tomas", "Pesek");
+        BankAccount bankAccount = accountService.createCurrentAccount(owner, 1000);
+        BankAccount savingAccount = accountService.createSavingAccount(owner, 1000);
+        BankAccount businessAccount = accountService.createBusinessAccount(owner, 1000);
+        BankAccount studentAccount = accountService.createStudentAccount(owner, 100, "Delta");
 
-        List<BankAccount> accounts = new ArrayList<>();
-
-        BankAccount bankAccount = new CurrentAccount(owner, 1000);
-        accounts.add(bankAccount);
-
-        BankAccount studentAccount = new StudentAccount(owner, 100);
-        accounts.add(studentAccount);
-
-        for (BankAccount account : accounts) {
+        for (BankAccount account : accountService.getAccounts()) {
             if (account instanceof InterestPoint) {
                 ((InterestPoint)account).calculateInterest();
             }
         }
 
 
-        for (BankAccount account : accounts) {
+        for (BankAccount account : accountService.getAccounts()) {
 
             if (account instanceof StudentAccount) {
                 StudentAccount overrideAccount = (StudentAccount) account;
@@ -66,31 +60,38 @@ public class Main {
         }
 
         BankAccountJsonSerializationService bankAccountJsonSerializationService = new BankAccountJsonSerializationService();
+        BankAccountXmlSerializationService bankAccountXmlSerializationService = new BankAccountXmlSerializationService();
 
         String json = bankAccountJsonSerializationService.serialize(bankAccount);
-
-        String allAccountJson = bankAccountJsonSerializationService.serializeAll(accounts);
         System.out.println(json);
-
+        String allAccountJson = bankAccountJsonSerializationService.serializeAll(accountService.getAccounts());
         System.out.println(allAccountJson);
 
-
-        transferService.withdraw(bankAccount, 500);
-        transferService.addToBalance(bankAccount,300);
-        transferService.addToBalance(bankAccount,100);
-        System.out.println("balance: " + bankAccount.getBalance());
-
-
-        CreditCard creditCard = new CreditCard(owner, 500);
-        transferService.addToBalance(creditCard,1000);
-        transferService.withdraw(creditCard,100);
+        String xml = bankAccountXmlSerializationService.serialize(bankAccount);
+        System.out.println(xml);
+        String allAccountXml = bankAccountXmlSerializationService.serializeAll(accountService.getAccounts());
+        System.out.println(allAccountXml);
 
 
-        // transferService.withdraw(bankAccount, 500);
-        // transferService.withdraw(bankAccount,500);
-        // transferService.withdraw(bankAccount,500);
+        try {
+            transferService.withdraw(bankAccount, 500);
+            transferService.addToBalance(bankAccount,300);
+            transferService.addToBalance(bankAccount,100);
+            System.out.println("balance: " + bankAccount.getBalance());
 
-        System.out.println("balance: " + bankAccount.getBalance());
 
+            CreditCard creditCard = new CreditCard(owner, 500);
+            transferService.addToBalance(creditCard,1000);
+            transferService.withdraw(creditCard,100);
+
+
+            transferService.withdraw(bankAccount, 500);
+            transferService.withdraw(bankAccount,500);
+            transferService.withdraw(bankAccount,500);
+
+            System.out.println("balance: " + bankAccount.getBalance());
+        } catch (RuntimeException e) {
+            System.out.println("error: " + e.getMessage());
+        }
     }
 }

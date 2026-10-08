@@ -68,7 +68,7 @@ class TransferServiceTest {
 
     @Test
     public void studentAccountCanGoNegativeUpToLimit() {
-        StudentAccount account = new StudentAccount(owner, 0);
+        StudentAccount account = new StudentAccount(owner, "Test");
 
         transferService.withdraw(account, 5000);
 
@@ -77,7 +77,7 @@ class TransferServiceTest {
 
     @Test
     public void studentAccountOverLimitThrows() {
-        StudentAccount account = new StudentAccount(owner, 0);
+        StudentAccount account = new StudentAccount(owner, "Test");
 
         assertThrows(RuntimeException.class, () -> transferService.withdraw(account, 5001));
         assertEquals(0, account.getBalance(), DELTA);

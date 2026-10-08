@@ -19,13 +19,13 @@ public abstract class BankAccount implements Withdraw {
 
     protected double balance;
 
-    protected Notifier notifier = new EmailNotifier();
+    // 1
+    // 2
+    // 3
+    // 4
+    // 5
+    // 6
 
-    public BankAccount(String uuid, String accountNumber, Owner owner) {
-        this.uuid = uuid;
-        this.accountNumber = accountNumber;
-        this.owner = owner;
-    }
 
     public BankAccount(Owner owner) {
         this.owner = owner;
@@ -45,5 +45,17 @@ public abstract class BankAccount implements Withdraw {
     @Override
     public double getBalance() {
         return this.balance;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
     }
 }
