@@ -4,7 +4,7 @@ import accounts.BankAccount;
 
 import java.util.List;
 
-public class BankAccountJsonSerializationService implements Serialization {
+public class BankAccountJsonSerializationService implements BankAccountSerialization {
 
     BankAccountSerializeFactory bankAccountSerializeFactory = new BankAccountSerializeFactory();
 
@@ -46,5 +46,4 @@ public class BankAccountJsonSerializationService implements Serialization {
 
         return builder.toString();
     }
-
 }

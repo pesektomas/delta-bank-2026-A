@@ -1,12 +1,12 @@
 import accounts.BankAccount;
 import accounts.InterestPoint;
 import accounts.StudentAccount;
-import accounts.serialization.BankAccountJsonSerializationService;
+import accounts.serialization.BankAccountGsonSerializationService;
 import accounts.serialization.BankAccountXmlSerializationService;
+import accounts.serialization.BankAccountSerialization;
 import accounts.services.AccountService;
 import creditCards.CreditCard;
 import people.Owner;
-import people.factories.OwnerFactory;
 import people.services.OwnerService;
 import transfers.TransferService;
 
@@ -59,8 +59,9 @@ public class Main {
             }
         }
 
-        BankAccountJsonSerializationService bankAccountJsonSerializationService = new BankAccountJsonSerializationService();
-        BankAccountXmlSerializationService bankAccountXmlSerializationService = new BankAccountXmlSerializationService();
+        //Serialization bankAccountJsonSerializationService = new BankAccountJsonSerializationService();
+        BankAccountSerialization bankAccountJsonSerializationService = new BankAccountGsonSerializationService();
+        BankAccountSerialization bankAccountXmlSerializationService = new BankAccountXmlSerializationService();
 
         String json = bankAccountJsonSerializationService.serialize(bankAccount);
         System.out.println(json);

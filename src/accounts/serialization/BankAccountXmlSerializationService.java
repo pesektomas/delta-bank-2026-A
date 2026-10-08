@@ -4,7 +4,7 @@ import accounts.BankAccount;
 
 import java.util.List;
 
-public class BankAccountXmlSerializationService implements Serialization{
+public class BankAccountXmlSerializationService implements BankAccountSerialization {
 
     BankAccountSerializeFactory bankAccountSerializeFactory = new BankAccountSerializeFactory();
 
