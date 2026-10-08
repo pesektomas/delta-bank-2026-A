@@ -2,6 +2,8 @@ import accounts.BankAccount;
 import accounts.CurrentAccount;
 import accounts.InterestPoint;
 import accounts.StudentAccount;
+import accounts.serialization.BankAccountJsonSerializationService;
+import accounts.serialization.BankAccountSerializeFactory;
 import creditCards.CreditCard;
 import people.Owner;
 import people.OwnerFactory;
@@ -63,6 +65,16 @@ public class Main {
             }
         }
 
+        BankAccountJsonSerializationService bankAccountJsonSerializationService = new BankAccountJsonSerializationService();
+
+        String json = bankAccountJsonSerializationService.serialize(bankAccount);
+
+        String allAccountJson = bankAccountJsonSerializationService.serializeAll(accounts);
+        System.out.println(json);
+
+        System.out.println(allAccountJson);
+
+
         transferService.withdraw(bankAccount, 500);
         transferService.addToBalance(bankAccount,300);
         transferService.addToBalance(bankAccount,100);
@@ -78,8 +90,7 @@ public class Main {
         // transferService.withdraw(bankAccount,500);
         // transferService.withdraw(bankAccount,500);
 
-
-
         System.out.println("balance: " + bankAccount.getBalance());
+
     }
 }
