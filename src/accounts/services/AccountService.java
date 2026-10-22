@@ -7,7 +7,7 @@ import people.Owner;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountService {
+public class AccountService implements IAccountService {
 
     List<BankAccount> accounts = new ArrayList<>();
 

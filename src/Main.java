@@ -1,14 +1,19 @@
 import accounts.BankAccount;
 import accounts.InterestPoint;
 import accounts.StudentAccount;
+import accounts.decorators.AccountLoggingService;
+import accounts.decorators.AccountLoggingWithTimeService;
 import accounts.serialization.BankAccountGsonSerializationService;
 import accounts.serialization.BankAccountXmlSerializationService;
 import accounts.serialization.BankAccountSerialization;
 import accounts.services.AccountService;
+import accounts.services.IAccountService;
 import creditCards.CreditCard;
 import people.Owner;
 import people.services.OwnerService;
 import transfers.TransferService;
+
+import java.time.LocalTime;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -34,15 +39,33 @@ public class Main {
     public static void main(String[] args) {
 
         TransferService transferService = new TransferService();
-        AccountService accountService = new AccountService();
-        OwnerService ownerService = new OwnerService();
 
+        IAccountService accountService = new AccountService();
+        IAccountService accountServiceWithLogin
+                = new AccountLoggingService(accountService);
+        IAccountService accountServiceWithTimeLogin
+                = new AccountLoggingWithTimeService(accountService);
+        IAccountService accountServiceWithLoginAndTimeLogin
+                = new AccountLoggingService(accountServiceWithTimeLogin);
+
+        OwnerService ownerService = new OwnerService();
         Owner owner = ownerService.createOwner("Tomas", "Pesek");
 
+        System.out.println("ORIGINAL");
         BankAccount bankAccount = accountService.createCurrentAccount(owner, 1000);
-        BankAccount savingAccount = accountService.createSavingAccount(owner, 1000);
-        BankAccount businessAccount = accountService.createBusinessAccount(owner, 1000);
-        BankAccount studentAccount = accountService.createStudentAccount(owner, 100, "Delta");
+        System.out.println("---");
+
+        System.out.println("LOGGING");
+        BankAccount savingAccount = accountServiceWithLogin.createSavingAccount(owner, 1000);
+        System.out.println("---");
+
+        System.out.println("LOGGING WITH TIME");
+        BankAccount businessAccount = accountServiceWithTimeLogin.createBusinessAccount(owner, 1000);
+        System.out.println("---");
+
+        System.out.println("LOGGING AND LOGGING WITH TIME");
+        BankAccount studentAccount = accountServiceWithLoginAndTimeLogin.createStudentAccount(owner, 100, "Delta");
+        System.out.println("---");
 
         for (BankAccount account : accountService.getAccounts()) {
             if (account instanceof InterestPoint) {
