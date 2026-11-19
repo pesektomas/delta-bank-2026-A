@@ -10,7 +10,11 @@ public class TransferService {
     private static final float BUSINESS_ACCOUNT_SUB_FEE = 0.1f;
     private static final float STUDENT_ACCOUNT_LIMIT = -5000;
 
-    Notifier notifier = new ConsoleNotifier();
+    Notifier notifier;
+
+    public TransferService(Notifier notifier) {
+        this.notifier = notifier;
+    }
 
     public void withdraw(Withdraw withdrawObject, double amount) {
 

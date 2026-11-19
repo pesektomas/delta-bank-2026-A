@@ -6,15 +6,11 @@ import java.util.Set;
 
 public class AccountNumberGenerator {
 
+    private static final String BANK_CODE = "0800";
     private static final int[] WEIGHTS = {6, 3, 7, 9, 10, 5, 8, 4, 2, 1};
 
-    private final String bankCode;
     private final Random random = new Random();
     private final Set<String> issuedNumbers = new HashSet<>();
-
-    public AccountNumberGenerator(String bankCode) {
-        this.bankCode = bankCode;
-    }
 
     public String generate() {
         String number;
@@ -22,7 +18,7 @@ public class AccountNumberGenerator {
             number = generateBaseNumber();
         } while (!issuedNumbers.add(number)); // add vrátí false, pokud už číslo existuje
 
-        return number + "/" + bankCode;
+        return number + "/" + BANK_CODE;
     }
 
     private String generateBaseNumber() {

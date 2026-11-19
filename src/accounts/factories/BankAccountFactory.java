@@ -10,10 +10,13 @@ import java.util.UUID;
 
 public class BankAccountFactory {
 
-    private static final String BANK_CODE = "0800";
+    private Notifier notifier;
+    private AccountNumberGenerator accountNumberGenerator;
 
-    private Notifier notifier = new EmailNotifier();
-    private AccountNumberGenerator accountNumberGenerator = new AccountNumberGenerator(BANK_CODE);
+    public BankAccountFactory(Notifier notifier, AccountNumberGenerator accountNumberGenerator) {
+        this.notifier = notifier;
+        this.accountNumberGenerator = accountNumberGenerator;
+    }
 
     public BankAccount createCurrentAccount(Owner owner, double balance) {
         CurrentAccount currentAccount = new CurrentAccount(owner, balance);

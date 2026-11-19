@@ -19,14 +19,6 @@ public abstract class BankAccount implements Withdraw {
 
     protected double balance;
 
-    // 1
-    // 2
-    // 3
-    // 4
-    // 5
-    // 6
-
-
     public BankAccount(Owner owner) {
         this.owner = owner;
         this.balance = 0;

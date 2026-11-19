@@ -9,9 +9,13 @@ import java.util.List;
 
 public class OwnerService {
 
-    OwnerFactory ownerFactory = new OwnerFactory();
+    OwnerFactory ownerFactory;
 
     List<Owner> owners = new ArrayList<>();
+
+    public OwnerService(OwnerFactory ownerFactory) {
+        this.ownerFactory = ownerFactory;
+    }
 
     public Owner createOwner(String firstName, String lastName) {
         Owner owner = ownerFactory.createAccountOwner(firstName, lastName);

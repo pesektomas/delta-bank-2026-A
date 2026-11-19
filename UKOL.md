@@ -1,9 +1,8 @@
-# Ukol do 22.10.
+# Ukol do 26.11.
 
 
-## Použít knihovnu na XML
+## Převod měn
 
-1. Na maven central repository najít vhodnou knihovnu pro XML serializaci
-2. Použít jí stejně jako knihovnu GSON kterou používáme na JSON serializaci
-   - vytvořit novou serializační službu pro tuto knihovnu
-   - použít jí místo původní implementace
+1. Chceme mít u účtu uvedenou měnu, ve které je účet veden
+2. Ve výpisech do console chceme mít tuto měnu uvedenou
+3. Ve výpisech do console chceme mít přepočet na jednu další, libovolně zvolenou, měnu

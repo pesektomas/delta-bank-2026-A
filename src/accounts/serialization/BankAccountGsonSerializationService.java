@@ -8,8 +8,12 @@ import java.util.List;
 
 public class BankAccountGsonSerializationService implements BankAccountSerialization {
 
-    BankAccountSerializeFactory bankAccountSerializeFactory = new BankAccountSerializeFactory();
+    BankAccountSerializeFactory bankAccountSerializeFactory;
     Gson gson = new Gson();
+
+    public BankAccountGsonSerializationService(BankAccountSerializeFactory bankAccountSerializeFactory) {
+        this.bankAccountSerializeFactory = bankAccountSerializeFactory;
+    }
 
     @Override
     public String serializeAll(List<BankAccount> bankAccounts) {

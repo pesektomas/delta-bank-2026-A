@@ -11,7 +11,11 @@ public class AccountService implements IAccountService {
 
     List<BankAccount> accounts = new ArrayList<>();
 
-    BankAccountFactory accountFactory = new BankAccountFactory();
+    BankAccountFactory accountFactory;
+
+    public AccountService(BankAccountFactory accountFactory) {
+        this.accountFactory = accountFactory;
+    }
 
     public BankAccount createCurrentAccount(Owner owner, double balance) {
         BankAccount bankAccount = accountFactory.createCurrentAccount(owner, balance);

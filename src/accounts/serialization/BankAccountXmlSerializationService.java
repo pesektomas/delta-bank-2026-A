@@ -6,7 +6,11 @@ import java.util.List;
 
 public class BankAccountXmlSerializationService implements BankAccountSerialization {
 
-    BankAccountSerializeFactory bankAccountSerializeFactory = new BankAccountSerializeFactory();
+    BankAccountSerializeFactory bankAccountSerializeFactory;
+
+    public BankAccountXmlSerializationService(BankAccountSerializeFactory bankAccountSerializeFactory) {
+        this.bankAccountSerializeFactory = bankAccountSerializeFactory;
+    }
 
     @Override
     public String serializeAll(List<BankAccount> bankAccounts) {
