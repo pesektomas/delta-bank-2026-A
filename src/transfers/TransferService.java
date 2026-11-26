@@ -2,19 +2,19 @@ package transfers;
 
 import accounts.BusinessAccount;
 import accounts.StudentAccount;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import notifiers.ConsoleNotifier;
 import notifiers.Notifier;
 
+@Singleton
 public class TransferService {
 
     private static final float BUSINESS_ACCOUNT_SUB_FEE = 0.1f;
     private static final float STUDENT_ACCOUNT_LIMIT = -5000;
 
+    @Inject
     Notifier notifier;
-
-    public TransferService(Notifier notifier) {
-        this.notifier = notifier;
-    }
 
     public void withdraw(Withdraw withdrawObject, double amount) {
 

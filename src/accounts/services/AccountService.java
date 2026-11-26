@@ -2,20 +2,20 @@ package accounts.services;
 
 import accounts.BankAccount;
 import accounts.factories.BankAccountFactory;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import people.Owner;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Singleton
 public class AccountService implements IAccountService {
 
     List<BankAccount> accounts = new ArrayList<>();
 
+    @Inject
     BankAccountFactory accountFactory;
-
-    public AccountService(BankAccountFactory accountFactory) {
-        this.accountFactory = accountFactory;
-    }
 
     public BankAccount createCurrentAccount(Owner owner, double balance) {
         BankAccount bankAccount = accountFactory.createCurrentAccount(owner, balance);

@@ -2,17 +2,15 @@ package accounts.decorators;
 
 import accounts.BankAccount;
 import accounts.services.IAccountService;
+import com.google.inject.Inject;
 import people.Owner;
 
 import java.util.List;
 
 public class AccountLoggingService implements IAccountService {
 
+    @Inject
     IAccountService service;
-
-    public AccountLoggingService(IAccountService service) {
-        this.service = service;
-    }
 
     @Override
     public BankAccount createCurrentAccount(Owner owner, double balance) {

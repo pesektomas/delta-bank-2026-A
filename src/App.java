@@ -1,41 +1,67 @@
 import accounts.BankAccount;
 import accounts.InterestPoint;
 import accounts.StudentAccount;
+import accounts.serialization.BankAccountJsonSerializationService;
 import accounts.serialization.BankAccountSerialization;
+import accounts.serialization.BankAccountXmlSerializationService;
+import accounts.services.AccountService;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import creditCards.CreditCard;
-import di.Container;
+import creditCards.CreditCardFactory;
 import people.Owner;
+import people.services.OwnerService;
+import transfers.TransferService;
 
+@Singleton
 public class App {
 
-    public void run(Container container) {
+    @Inject
+    private OwnerService ownerService;
 
-        Owner owner = container.ownerService.createOwner("Tomas", "Pesek");
+    @Inject
+    private AccountService accountService;
+
+    @Inject
+    private BankAccountJsonSerializationService bankAccountJsonSerializationService;
+
+    @Inject
+    private BankAccountXmlSerializationService bankAccountXmlSerializationService;
+
+    @Inject
+    private CreditCardFactory creditCardFactory;
+
+    @Inject
+    private TransferService transferService;
+
+    public void run() {
+
+        Owner owner = this.ownerService.createOwner("Tomas", "Pesek");
 
         System.out.println("ORIGINAL");
-        BankAccount bankAccount = container.accountService.createCurrentAccount(owner, 1000);
+        BankAccount bankAccount = this.accountService.createCurrentAccount(owner, 1000);
         System.out.println("---");
 
         System.out.println("LOGGING");
-        BankAccount savingAccount = container.accountServiceWithLogin.createSavingAccount(owner, 1000);
+        BankAccount savingAccount = this.accountService.createSavingAccount(owner, 1000);
         System.out.println("---");
 
         System.out.println("LOGGING WITH TIME");
-        BankAccount businessAccount = container.accountServiceWithTimeLogin.createBusinessAccount(owner, 1000);
+        BankAccount businessAccount = this.accountService.createBusinessAccount(owner, 1000);
         System.out.println("---");
 
         System.out.println("LOGGING AND LOGGING WITH TIME");
-        BankAccount studentAccount = container.accountServiceWithLoginAndTimeLogin.createStudentAccount(owner, 100, "Delta");
+        BankAccount studentAccount = this.accountService.createStudentAccount(owner, 100, "Delta");
         System.out.println("---");
 
-        for (BankAccount account : container.accountService.getAccounts()) {
+        for (BankAccount account : this.accountService.getAccounts()) {
             if (account instanceof InterestPoint) {
                 ((InterestPoint)account).calculateInterest();
             }
         }
 
 
-        for (BankAccount account : container.accountService.getAccounts()) {
+        for (BankAccount account : this.accountService.getAccounts()) {
 
             if (account instanceof StudentAccount) {
                 StudentAccount overrideAccount = (StudentAccount) account;
@@ -45,35 +71,35 @@ public class App {
 
         //Serialization bankAccountJsonSerializationService = new BankAccountJsonSerializationService();
 
-        BankAccountSerialization bankAccountJsonSerializationService = container.bankAccountJsonSerializationService;
-        BankAccountSerialization bankAccountXmlSerializationService = container.bankAccountXmlSerializationService;
+        BankAccountSerialization bankAccountJsonSerializationService = this.bankAccountJsonSerializationService;
+        BankAccountSerialization bankAccountXmlSerializationService = this.bankAccountXmlSerializationService;
 
         String json = bankAccountJsonSerializationService.serialize(bankAccount);
         System.out.println(json);
-        String allAccountJson = bankAccountJsonSerializationService.serializeAll(container.accountService.getAccounts());
+        String allAccountJson = bankAccountJsonSerializationService.serializeAll(this.accountService.getAccounts());
         System.out.println(allAccountJson);
 
         String xml = bankAccountXmlSerializationService.serialize(bankAccount);
         System.out.println(xml);
-        String allAccountXml = bankAccountXmlSerializationService.serializeAll(container.accountService.getAccounts());
+        String allAccountXml = bankAccountXmlSerializationService.serializeAll(this.accountService.getAccounts());
         System.out.println(allAccountXml);
 
 
         try {
-            container.transferService.withdraw(bankAccount, 500);
-            container.transferService.addToBalance(bankAccount,300);
-            container.transferService.addToBalance(bankAccount,100);
+            this.transferService.withdraw(bankAccount, 500);
+            this.transferService.addToBalance(bankAccount,300);
+            this.transferService.addToBalance(bankAccount,100);
             System.out.println("balance: " + bankAccount.getBalance());
 
 
-            CreditCard creditCard = container.creditCardFactory.createCreditCard(owner, 500);
-            container.transferService.addToBalance(creditCard,1000);
-            container.transferService.withdraw(creditCard,100);
+            CreditCard creditCard = this.creditCardFactory.createCreditCard(owner, 500);
+            this.transferService.addToBalance(creditCard,1000);
+            this.transferService.withdraw(creditCard,100);
 
 
-            container.transferService.withdraw(bankAccount, 500);
-            container.transferService.withdraw(bankAccount,500);
-            container.transferService.withdraw(bankAccount,500);
+            this.transferService.withdraw(bankAccount, 500);
+            this.transferService.withdraw(bankAccount,500);
+            this.transferService.withdraw(bankAccount,500);
 
             System.out.println("balance: " + bankAccount.getBalance());
         } catch (RuntimeException e) {

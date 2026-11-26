@@ -2,6 +2,7 @@ package accounts.factories;
 
 import accounts.*;
 import accounts.services.AccountNumberGenerator;
+import com.google.inject.Inject;
 import notifiers.EmailNotifier;
 import notifiers.Notifier;
 import people.Owner;
@@ -10,13 +11,11 @@ import java.util.UUID;
 
 public class BankAccountFactory {
 
+    @Inject
     private Notifier notifier;
-    private AccountNumberGenerator accountNumberGenerator;
 
-    public BankAccountFactory(Notifier notifier, AccountNumberGenerator accountNumberGenerator) {
-        this.notifier = notifier;
-        this.accountNumberGenerator = accountNumberGenerator;
-    }
+    @Inject
+    private AccountNumberGenerator accountNumberGenerator;
 
     public BankAccount createCurrentAccount(Owner owner, double balance) {
         CurrentAccount currentAccount = new CurrentAccount(owner, balance);

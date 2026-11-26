@@ -1,22 +1,6 @@
-import accounts.BankAccount;
-import accounts.InterestPoint;
-import accounts.StudentAccount;
-import accounts.decorators.AccountLoggingService;
-import accounts.decorators.AccountLoggingWithTimeService;
-import accounts.serialization.BankAccountGsonSerializationService;
-import accounts.serialization.BankAccountXmlSerializationService;
-import accounts.serialization.BankAccountSerialization;
-import accounts.services.AccountService;
-import accounts.services.IAccountService;
-import creditCards.CreditCard;
-import di.Container;
-import di.ContainerFactory;
-import people.Owner;
-import people.factories.OwnerFactory;
-import people.services.OwnerService;
-import transfers.TransferService;
-
-import java.time.LocalTime;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import di.BankModule;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -40,12 +24,12 @@ public class Main {
      */
 
     public static void main(String[] args) {
+        Injector injector = Guice.createInjector(new BankModule());
+        App app = injector.getInstance(App.class);
+        app.run();
 
-        ContainerFactory containerFactory = new ContainerFactory();
-        Container container = containerFactory.createContainer();
-
-        App app = new App();
-        app.run(container);
+        // App app = new App();
+        // app.run();
 
     }
 }

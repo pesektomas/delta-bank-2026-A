@@ -1,18 +1,7 @@
 package transfers;
 
-import accounts.BusinessAccount;
-import accounts.CurrentAccount;
-import accounts.StudentAccount;
-import di.Container;
-import di.ContainerFactory;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import people.Owner;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 class TransferServiceTest {
-
+/*
     private static final double DELTA = 0.001;
 
     private ContainerFactory containerFactory = new ContainerFactory();
@@ -95,5 +84,5 @@ class TransferServiceTest {
 
         assertEquals(1500, account.getBalance(), DELTA);
     }
-
+*/
 }

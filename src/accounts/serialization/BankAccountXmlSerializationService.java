@@ -1,16 +1,16 @@
 package accounts.serialization;
 
 import accounts.BankAccount;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import java.util.List;
 
+@Singleton
 public class BankAccountXmlSerializationService implements BankAccountSerialization {
 
+    @Inject
     BankAccountSerializeFactory bankAccountSerializeFactory;
-
-    public BankAccountXmlSerializationService(BankAccountSerializeFactory bankAccountSerializeFactory) {
-        this.bankAccountSerializeFactory = bankAccountSerializeFactory;
-    }
 
     @Override
     public String serializeAll(List<BankAccount> bankAccounts) {

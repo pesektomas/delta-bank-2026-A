@@ -1,21 +1,20 @@
 package people.services;
 
-import accounts.BankAccount;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import people.Owner;
 import people.factories.OwnerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Singleton
 public class OwnerService {
 
+    @Inject
     OwnerFactory ownerFactory;
 
     List<Owner> owners = new ArrayList<>();
-
-    public OwnerService(OwnerFactory ownerFactory) {
-        this.ownerFactory = ownerFactory;
-    }
 
     public Owner createOwner(String firstName, String lastName) {
         Owner owner = ownerFactory.createAccountOwner(firstName, lastName);
